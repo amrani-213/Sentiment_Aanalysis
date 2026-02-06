@@ -38,8 +38,6 @@ models/*.pth
 models/*.pkl
 *.h5
 
-results/*/
-!results/.gitkeep
 
 .ipynb_checkpoints/
 *.ipynb

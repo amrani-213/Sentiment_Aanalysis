@@ -1,0 +1,144 @@
+{
+  "summary": {
+    "total_samples": 3124,
+    "total_errors": 969,
+    "error_rate": 0.31017925736235596
+  },
+  "errors_by_class": {
+    "Negative": {
+      "total": 911,
+      "errors": 278,
+      "error_rate": 0.305159165751921
+    },
+    "Neutral": {
+      "total": 1165,
+      "errors": 454,
+      "error_rate": 0.38969957081545065
+    },
+    "Positive": {
+      "total": 1048,
+      "errors": 237,
+      "error_rate": 0.22614503816793893
+    }
+  },
+  "confusion_pairs": {
+    "Negative \u2192 Neutral": 234,
+    "Negative \u2192 Positive": 44,
+    "Neutral \u2192 Negative": 244,
+    "Neutral \u2192 Positive": 210,
+    "Positive \u2192 Negative": 49,
+    "Positive \u2192 Neutral": 188
+  },
+  "error_examples": [
+    {
+      "text": "Amazing and helpful",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.802627682685852,
+      "probabilities": [
+        0.014297861605882645,
+        0.18307442963123322,
+        0.802627682685852
+      ]
+    },
+    {
+      "text": "A very helpful software especially in management work",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.7822815179824829,
+      "probabilities": [
+        0.016740435734391212,
+        0.200978085398674,
+        0.7822815179824829
+      ]
+    },
+    {
+      "text": " - sigh",
+      "true_label": "Neutral",
+      "predicted_label": "Negative",
+      "confidence": 0.778293251991272,
+      "probabilities": [
+        0.778293251991272,
+        0.20740924775600433,
+        0.01429758407175541
+      ]
+    },
+    {
+      "text": "_7 Wow that`s a big list...lol. I would be happy if I got half of that done. Now I feel lazy...thanks. Just kidding",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.760200560092926,
+      "probabilities": [
+        0.01806001365184784,
+        0.22173945605754852,
+        0.760200560092926
+      ]
+    },
+    {
+      "text": "I love lists, and I really love this easy to use app, however I also love making notes to myself of a *lengthy* nature (usually when I'm trying to go to sleep), like my thoughts on a subject or what I",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.7426643967628479,
+      "probabilities": [
+        0.03232306241989136,
+        0.2250126153230667,
+        0.7426643967628479
+      ]
+    },
+    {
+      "text": "That **** money sign. Ugh.",
+      "true_label": "Neutral",
+      "predicted_label": "Negative",
+      "confidence": 0.7426172494888306,
+      "probabilities": [
+        0.7426172494888306,
+        0.24137818813323975,
+        0.016004569828510284
+      ]
+    },
+    {
+      "text": "Expensive",
+      "true_label": "Positive",
+      "predicted_label": "Negative",
+      "confidence": 0.7405654191970825,
+      "probabilities": [
+        0.7405654191970825,
+        0.2434103935956955,
+        0.016024203971028328
+      ]
+    },
+    {
+      "text": "Best app",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.7400081157684326,
+      "probabilities": [
+        0.020258594304323196,
+        0.2397332340478897,
+        0.7400081157684326
+      ]
+    },
+    {
+      "text": "Stupid decision to remove timer.",
+      "true_label": "Neutral",
+      "predicted_label": "Negative",
+      "confidence": 0.7399247288703918,
+      "probabilities": [
+        0.7399247288703918,
+        0.2404034435749054,
+        0.019671835005283356
+      ]
+    },
+    {
+      "text": "Just add 'To Do List' feature. Highly recommend.",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.7392103672027588,
+      "probabilities": [
+        0.0195907112210989,
+        0.24119886755943298,
+        0.7392103672027588
+      ]
+    }
+  ]
+}

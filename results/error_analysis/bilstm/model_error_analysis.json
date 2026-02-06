@@ -1,0 +1,144 @@
+{
+  "summary": {
+    "total_samples": 3124,
+    "total_errors": 1102,
+    "error_rate": 0.352752880921895
+  },
+  "errors_by_class": {
+    "Negative": {
+      "total": 911,
+      "errors": 307,
+      "error_rate": 0.33699231613611413
+    },
+    "Neutral": {
+      "total": 1165,
+      "errors": 569,
+      "error_rate": 0.488412017167382
+    },
+    "Positive": {
+      "total": 1048,
+      "errors": 226,
+      "error_rate": 0.21564885496183206
+    }
+  },
+  "confusion_pairs": {
+    "Negative \u2192 Neutral": 218,
+    "Negative \u2192 Positive": 89,
+    "Neutral \u2192 Negative": 282,
+    "Neutral \u2192 Positive": 287,
+    "Positive \u2192 Negative": 66,
+    "Positive \u2192 Neutral": 160
+  },
+  "error_examples": [
+    {
+      "text": "Amazing and helpful",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.7269728183746338,
+      "probabilities": [
+        0.032064035534858704,
+        0.2409631311893463,
+        0.7269728183746338
+      ]
+    },
+    {
+      "text": "Edward Cullen. <3  Hahaha.",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.7122530341148376,
+      "probabilities": [
+        0.041787680238485336,
+        0.2459593117237091,
+        0.7122530341148376
+      ]
+    },
+    {
+      "text": "   All this flirting going on - The ATG smiles. Yay.  ((hugs))",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.708904504776001,
+      "probabilities": [
+        0.04861392453312874,
+        0.24248157441616058,
+        0.708904504776001
+      ]
+    },
+    {
+      "text": " YAY! Thanks for the #followfriday. #FAILFriday is still winning, though.",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.7054364085197449,
+      "probabilities": [
+        0.050316184759140015,
+        0.24424734711647034,
+        0.7054364085197449
+      ]
+    },
+    {
+      "text": " yes the new one, I adore both though  who doesn`t love Vincent!!!",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.6953228116035461,
+      "probabilities": [
+        0.05540245771408081,
+        0.24927476048469543,
+        0.6953228116035461
+      ]
+    },
+    {
+      "text": "Passive but good",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.6875501275062561,
+      "probabilities": [
+        0.04142942652106285,
+        0.27102041244506836,
+        0.6875501275062561
+      ]
+    },
+    {
+      "text": "Really needs and undo button, gesture or shake to undo. It's hell of a problem to find accidentally completed tasks.",
+      "true_label": "Positive",
+      "predicted_label": "Negative",
+      "confidence": 0.6846255660057068,
+      "probabilities": [
+        0.6846255660057068,
+        0.2801872491836548,
+        0.03518717363476753
+      ]
+    },
+    {
+      "text": "  thanks for following!  pretty complicated id you have there lol",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.6829752922058105,
+      "probabilities": [
+        0.058871448040008545,
+        0.2581532597541809,
+        0.6829752922058105
+      ]
+    },
+    {
+      "text": "Best app",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.6814920902252197,
+      "probabilities": [
+        0.045176874846220016,
+        0.27333104610443115,
+        0.6814920902252197
+      ]
+    },
+    {
+      "text": "great concept",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.6770531535148621,
+      "probabilities": [
+        0.04646260663866997,
+        0.2764842212200165,
+        0.6770531535148621
+      ]
+    }
+  ]
+}

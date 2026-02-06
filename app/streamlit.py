@@ -2,7 +2,7 @@
 Sentiment Analysis App - Custom Transformer vs BERTweet
 Clean UI with single text prediction, model comparison, and CSV batch processing
 """
-
+from download_models import download_model_if_needed, ensure_all_models_downloaded
 import streamlit as st
 import torch
 import torch.nn.functional as F
@@ -44,9 +44,9 @@ except ModuleNotFoundError:
 class Config:
     """App configuration"""
     # Paths (adjust these to match your actual paths)
-    TRANSFORMER_MODEL_PATH = r"C:\Sentiment_analysis\results\baseline\transformer\best_model.pt"
-    BERTWEET_MODEL_PATH = r"C:\Sentiment_analysis\results\pretrained\bertweet\best_model.pt"
-    VOCABULARY_PATH = r"C:\Sentiment_analysis\results\baseline\vocabulary.pkl"
+    TRANSFORMER_MODEL_PATH = "results/baseline/transformer/best_model.pt"
+    BERTWEET_MODEL_PATH = "results/pretrained/bertweet/best_model.pt"
+    VOCABULARY_PATH = "results/baseline/vocabulary.pkl"  # Adjust if needed
     
     # Model parameters
     TRANSFORMER_CONFIG = {
@@ -446,7 +446,12 @@ def main():
         }
         </style>
     """, unsafe_allow_html=True)
-    
+
+    with st.spinner("🔄 Preparing models..."):
+       if not ensure_all_models_downloaded():
+         st.error("❌ Failed to download required models. Please check your internet connection and try again.")
+         st.stop()
+
     # Header
     st.title("💭 Sentiment Analysis App")
     st.markdown("### Compare Custom Transformer vs BERTweet Models")
@@ -478,8 +483,8 @@ def main():
         st.markdown("🟠 **Neutral** - Neutral sentiment")
         st.markdown("🟢 **Positive** - Positive sentiment")
     
-    # Load models
-    with st.spinner("🔄 Loading models..."):
+    # Load models   
+    with st.spinner("🔄 Loading models and data..."):
         # Load preprocessor (includes vocabulary)
         preprocessor = load_preprocessor()
         

@@ -1,0 +1,144 @@
+{
+  "summary": {
+    "total_samples": 3124,
+    "total_errors": 1086,
+    "error_rate": 0.34763124199743917
+  },
+  "errors_by_class": {
+    "Negative": {
+      "total": 911,
+      "errors": 288,
+      "error_rate": 0.31613611416026344
+    },
+    "Neutral": {
+      "total": 1165,
+      "errors": 485,
+      "error_rate": 0.41630901287553645
+    },
+    "Positive": {
+      "total": 1048,
+      "errors": 313,
+      "error_rate": 0.29866412213740456
+    }
+  },
+  "confusion_pairs": {
+    "Negative \u2192 Neutral": 246,
+    "Negative \u2192 Positive": 42,
+    "Neutral \u2192 Negative": 284,
+    "Neutral \u2192 Positive": 201,
+    "Positive \u2192 Negative": 61,
+    "Positive \u2192 Neutral": 252
+  },
+  "error_examples": [
+    {
+      "text": " - sigh",
+      "true_label": "Neutral",
+      "predicted_label": "Negative",
+      "confidence": 0.9886944890022278,
+      "probabilities": [
+        0.9886944890022278,
+        0.011302357539534569,
+        3.1801416753296508e-06
+      ]
+    },
+    {
+      "text": "Amazing and helpful",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.9815022349357605,
+      "probabilities": [
+        1.1029764209524728e-05,
+        0.01848674938082695,
+        0.9815022349357605
+      ]
+    },
+    {
+      "text": "good.",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.9407047033309937,
+      "probabilities": [
+        5.325524034560658e-05,
+        0.05924205854535103,
+        0.9407047033309937
+      ]
+    },
+    {
+      "text": "Expensive",
+      "true_label": "Positive",
+      "predicted_label": "Negative",
+      "confidence": 0.9246453046798706,
+      "probabilities": [
+        0.9246453046798706,
+        0.07532787322998047,
+        2.6834622985916212e-05
+      ]
+    },
+    {
+      "text": "Best app",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.9227637648582458,
+      "probabilities": [
+        0.0025133180897682905,
+        0.07472294569015503,
+        0.9227637648582458
+      ]
+    },
+    {
+      "text": "... Money money money...      http://twitpic.com/664uz",
+      "true_label": "Neutral",
+      "predicted_label": "Negative",
+      "confidence": 0.9151238203048706,
+      "probabilities": [
+        0.9151238203048706,
+        0.08423195779323578,
+        0.0006441869190894067
+      ]
+    },
+    {
+      "text": "\ud83d\udc4d",
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "confidence": 0.8895600438117981,
+      "probabilities": [
+        0.007038488518446684,
+        0.10340148210525513,
+        0.8895600438117981
+      ]
+    },
+    {
+      "text": "That **** money sign. Ugh.",
+      "true_label": "Neutral",
+      "predicted_label": "Negative",
+      "confidence": 0.8869552612304688,
+      "probabilities": [
+        0.8869552612304688,
+        0.11253787577152252,
+        0.0005069079925306141
+      ]
+    },
+    {
+      "text": " google away",
+      "true_label": "Neutral",
+      "predicted_label": "Negative",
+      "confidence": 0.8528607487678528,
+      "probabilities": [
+        0.8528607487678528,
+        0.1442696452140808,
+        0.002869624411687255
+      ]
+    },
+    {
+      "text": "Stupid decision to remove timer.",
+      "true_label": "Neutral",
+      "predicted_label": "Negative",
+      "confidence": 0.8256158828735352,
+      "probabilities": [
+        0.8256158828735352,
+        0.16898643970489502,
+        0.0053976746276021
+      ]
+    }
+  ]
+}
