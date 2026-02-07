@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
-from typing import Optional, Tuple, Any, Dict  # ✅ FIXED: Added Tuple import
+from typing import Optional, Tuple, Any, Dict  
 
 
 class PositionalEncoding(nn.Module):
@@ -20,7 +20,6 @@ class PositionalEncoding(nn.Module):
         super(PositionalEncoding, self).__init__()
         self.dropout = nn.Dropout(p=dropout)
         
-        # Create positional encoding matrix
         pe = torch.zeros(max_len, d_model)
         position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
         div_term = torch.exp(
@@ -29,7 +28,7 @@ class PositionalEncoding(nn.Module):
         
         pe[:, 0::2] = torch.sin(position * div_term)
         pe[:, 1::2] = torch.cos(position * div_term)
-        pe = pe.unsqueeze(0)  # (1, max_len, d_model)
+        pe = pe.unsqueeze(0) 
         
         self.register_buffer('pe', pe)
     
@@ -57,12 +56,10 @@ class MultiHeadAttention(nn.Module):
         self.num_heads = num_heads
         self.d_k = d_model // num_heads
         
-        # Linear projections for Q, K, V
         self.W_q = nn.Linear(d_model, d_model)
         self.W_k = nn.Linear(d_model, d_model)
         self.W_v = nn.Linear(d_model, d_model)
         
-        # Output projection
         self.W_o = nn.Linear(d_model, d_model)
         
         self.dropout = nn.Dropout(dropout)
@@ -86,19 +83,16 @@ class MultiHeadAttention(nn.Module):
         Returns:
             Output and attention weights
         """
-        # Compute attention scores
+     
         scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.d_k)
-        # scores: (batch_size, num_heads, seq_len, seq_len)
-        
-        # Apply mask if provided
+
         if mask is not None:
             scores = scores.masked_fill(mask == 0, -1e9)
         
-        # Apply softmax
         attn_weights = F.softmax(scores, dim=-1)
         attn_weights = self.dropout(attn_weights)
         
-        # Apply attention to values
+
         output = torch.matmul(attn_weights, V)
         
         return output, attn_weights
@@ -124,25 +118,20 @@ class MultiHeadAttention(nn.Module):
         """
         batch_size = query.size(0)
         
-        # Linear projections
-        Q = self.W_q(query)  # (batch_size, seq_len, d_model)
+        Q = self.W_q(query)  
         K = self.W_k(key)
         V = self.W_v(value)
         
-        # Split into multiple heads
+      
         Q = Q.view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
         K = K.view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
         V = V.view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
-        # Shape: (batch_size, num_heads, seq_len, d_k)
-        
-        # Apply scaled dot-product attention
+ 
         attn_output, attn_weights = self.scaled_dot_product_attention(Q, K, V, mask)
         
-        # Concatenate heads
         attn_output = attn_output.transpose(1, 2).contiguous()
         attn_output = attn_output.view(batch_size, -1, self.d_model)
         
-        # Final linear projection
         output = self.W_o(attn_output)
         
         return output, attn_weights
@@ -181,17 +170,13 @@ class TransformerEncoderLayer(nn.Module):
     def __init__(self, d_model: int, num_heads: int, d_ff: int, dropout: float = 0.1):
         super(TransformerEncoderLayer, self).__init__()
         
-        # Multi-head attention
         self.attention = MultiHeadAttention(d_model, num_heads, dropout)
-        
-        # Feed-forward network
+
         self.feed_forward = FeedForward(d_model, d_ff, dropout)
         
-        # Layer normalization
         self.norm1 = nn.LayerNorm(d_model)
         self.norm2 = nn.LayerNorm(d_model)
         
-        # Dropout
         self.dropout = nn.Dropout(dropout)
     
     def forward(self, x: torch.Tensor, mask: Optional[torch.Tensor] = None, **kwargs) -> torch.Tensor:
@@ -205,11 +190,9 @@ class TransformerEncoderLayer(nn.Module):
         Returns:
             Output tensor
         """
-        # Multi-head attention with residual connection
         attn_output, _ = self.attention(x, x, x, mask)
         x = self.norm1(x + self.dropout(attn_output))
         
-        # Feed-forward with residual connection
         ff_output = self.feed_forward(x)
         x = self.norm2(x + self.dropout(ff_output))
         
@@ -260,25 +243,20 @@ class CustomTransformer(nn.Module):
         self.num_heads = num_heads
         self.num_layers = num_layers
         
-        # Embedding layer
         self.embedding = nn.Embedding(vocab_size, d_model, padding_idx=padding_idx)
         
-        # Positional encoding
         self.pos_encoding = PositionalEncoding(d_model, max_len, dropout)
         
-        # ✅ CRITICAL FIX 1: Explicit type annotation for ModuleList
         self.encoder_layers: nn.ModuleList = nn.ModuleList([
             TransformerEncoderLayer(d_model, num_heads, d_ff, dropout)
             for _ in range(num_layers)
         ])
         
-        # Classification head
         self.fc1 = nn.Linear(d_model, d_model // 2)
         self.fc2 = nn.Linear(d_model // 2, num_classes)
         
         self.dropout = nn.Dropout(dropout)
         
-        # Initialize weights
         self._init_weights()
     
     def _init_weights(self):
@@ -300,33 +278,24 @@ class CustomTransformer(nn.Module):
         """
         batch_size, seq_len = x.size()
         
-        # Create padding mask if not provided
         if mask is None:
-            mask = (x != 0).float()  # (batch_size, seq_len)
+            mask = (x != 0).float()  
         
-        # Embedding with scaling
         x = self.embedding(x) * math.sqrt(self.d_model)
-        # x: (batch_size, seq_len, d_model)
-        
-        # Add positional encoding
+
         x = self.pos_encoding(x)
         
-        # Prepare mask for attention (unsqueeze for broadcasting)
-        # mask: (batch_size, 1, 1, seq_len)
+   
         attn_mask = mask.unsqueeze(1).unsqueeze(2)
-        
-        # ✅ CRITICAL FIX 2: Convert ModuleList to list for type-safe iteration
-        # Resolves "__getitem__ method not defined on type Module" error
+  
         for encoder_layer in list(self.encoder_layers):
             x = encoder_layer(x, attn_mask)
-        
-        # Global average pooling (with attention to padding)
+      
         mask_expanded = mask.unsqueeze(-1).expand(x.size())
         sum_embeddings = torch.sum(x * mask_expanded, dim=1)
         sum_mask = torch.clamp(mask_expanded.sum(dim=1), min=1e-9)
         pooled = sum_embeddings / sum_mask  # (batch_size, d_model)
-        
-        # Classification
+    
         out = F.relu(self.fc1(pooled))
         out = self.dropout(out)
         logits = self.fc2(out)
@@ -360,21 +329,18 @@ def create_custom_transformer(
     
     model = CustomTransformer(**config)
     
-    return model, config  # ✅ Return tuple
+    return model, config  
 
 
 if __name__ == "__main__":
-    # Test model
     print("="*80)
     print("TESTING CUSTOM TRANSFORMER MODEL")
     print("="*80)
     
-    # Model parameters
     vocab_size = 10000
     batch_size = 16
     seq_len = 100
     
-    # Create model
     model = create_custom_transformer(
         vocab_size=vocab_size,
         d_model=256,
@@ -388,21 +354,18 @@ if __name__ == "__main__":
     print(f"\nModel Architecture:")
     print(model)
     
-    # Count parameters
     total_params = sum(p.numel() for p in model.parameters())
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     
     print(f"\nTotal Parameters: {total_params:,}")
     print(f"Trainable Parameters: {trainable_params:,}")
     
-    # Test forward pass
     dummy_input = torch.randint(0, vocab_size, (batch_size, seq_len))
     print(f"\nInput shape: {dummy_input.shape}")
     
     output = model(dummy_input)
     print(f"Output shape: {output.shape}")
     
-    # Test with mask
     mask = (dummy_input != 0).float()
     output_with_mask = model(dummy_input, mask=mask)
     print(f"Output with mask shape: {output_with_mask.shape}")
