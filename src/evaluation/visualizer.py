@@ -11,10 +11,10 @@ from typing import Dict, List, Tuple, Optional, Any
 import os
 from wordcloud import WordCloud
 from math import pi
-from scipy.sparse import spmatrix  # ✅ Import sparse matrix base type
+from scipy.sparse import spmatrix 
 
 
-# Set style
+
 sns.set_style('whitegrid')
 plt.rcParams['figure.figsize'] = (12, 8)
 plt.rcParams['font.size'] = 10
@@ -40,10 +40,7 @@ class SentimentVisualizer:
         self.class_names = ['Negative', 'Neutral', 'Positive']
         self.colors = ['#e74c3c', '#95a5a6', '#2ecc71']  # Red, Gray, Green
     
-    # =========================================================================
-    # 1-2. TRAINING CURVES
-    # =========================================================================
-    
+  
     def plot_training_curves(self, history: Dict[str, List[float]], save_name='training_curves.png'):
         """
         Plot training and validation loss + accuracy
@@ -56,7 +53,7 @@ class SentimentVisualizer:
         
         epochs = range(1, len(history['train_loss']) + 1)
         
-        # Loss plot
+    
         ax1.plot(epochs, history['train_loss'], 'b-', label='Train Loss', linewidth=2)
         ax1.plot(epochs, history['val_loss'], 'r-', label='Val Loss', linewidth=2)
         ax1.set_xlabel('Epoch', fontsize=12)
@@ -64,8 +61,7 @@ class SentimentVisualizer:
         ax1.set_title('Training and Validation Loss', fontsize=14, fontweight='bold')
         ax1.legend(fontsize=11)
         ax1.grid(True, alpha=0.3)
-        
-        # Accuracy plot
+    
         ax2.plot(epochs, history['train_acc'], 'b-', label='Train Accuracy', linewidth=2)
         ax2.plot(epochs, history['val_acc'], 'r-', label='Val Accuracy', linewidth=2)
         ax2.set_xlabel('Epoch', fontsize=12)
@@ -80,9 +76,7 @@ class SentimentVisualizer:
         
         print(f"✅ Saved training curves to {save_name}")
     
-    # =========================================================================
-    # 3-4. CONFUSION MATRICES
-    # =========================================================================
+
     
     def plot_confusion_matrix(self, cm: np.ndarray, normalize: bool = False, save_name='confusion_matrix.png'):
         """
@@ -116,10 +110,7 @@ class SentimentVisualizer:
         
         print(f"✅ Saved confusion matrix to {save_name}")
     
-    # =========================================================================
-    # 5. PER-CLASS F1 SCORES
-    # =========================================================================
-    
+  
     def plot_per_class_f1(self, metrics: Dict[str, Any], save_name='per_class_f1.png'):
         """
         Bar chart of per-class F1 scores
@@ -135,7 +126,7 @@ class SentimentVisualizer:
         
         bars = plt.bar(classes, f1_scores, color=self.colors, alpha=0.8, edgecolor='black')
         
-        # Add value labels on bars
+    
         for bar in bars:
             height = bar.get_height()
             plt.text(bar.get_x() + bar.get_width()/2., height,
@@ -153,9 +144,7 @@ class SentimentVisualizer:
         
         print(f"✅ Saved per-class F1 to {save_name}")
     
-    # =========================================================================
-    # 6. MODEL COMPARISON RADAR CHART (FIXED)
-    # =========================================================================
+
     
     def plot_model_comparison_radar(self, models_metrics: Dict[str, Dict[str, float]], 
                                     save_name='model_comparison_radar.png'):
@@ -187,16 +176,15 @@ class SentimentVisualizer:
         ax.set_xticks(angles[:-1])
         ax.set_xticklabels(categories, fontsize=12)
         
-        # Plot for each model
         for model_name, metrics in models_metrics.items():
             values = [
                 metrics['accuracy'],
                 metrics['precision_macro'],
                 metrics['recall_macro'],
                 metrics['f1_macro'],
-                (metrics['mcc'] + 1) / 2  # Normalize MCC from [-1,1] to [0,1]
+                (metrics['mcc'] + 1) / 2  
             ]
-            values += values[:1]  # Complete the loop
+            values += values[:1]  
             
             ax.plot(angles, values, 'o-', linewidth=2, label=model_name)
             ax.fill(angles, values, alpha=0.15)
@@ -213,9 +201,7 @@ class SentimentVisualizer:
         
         print(f"✅ Saved radar chart to {save_name}")
     
-    # =========================================================================
-    # 7. ERROR DISTRIBUTION (FIXED)
-    # =========================================================================
+
     
     def plot_error_distribution(self, error_analysis: Dict[str, Any], 
                                 save_name='error_distribution.png'):
@@ -248,8 +234,7 @@ class SentimentVisualizer:
         ax1.legend(fontsize=11)
         ax1.grid(axis='y', alpha=0.3)
         
-        # Error rates
-        error_rates = [error_analysis['errors_by_class'][c]['error_rate'] for c in classes]  # ✅ Corrected key
+        error_rates = [error_analysis['errors_by_class'][c]['error_rate'] for c in classes]  
         bars = ax2.bar(classes, error_rates, color=self.colors, alpha=0.8, edgecolor='black')
         
         for bar in bars:
@@ -270,9 +255,7 @@ class SentimentVisualizer:
         
         print(f"✅ Saved error distribution to {save_name}")
     
-    # =========================================================================
-    # 8. CONFIDENCE DISTRIBUTION
-    # =========================================================================
+  
     
     def plot_confidence_distribution(self, probabilities: np.ndarray, predictions: np.ndarray, 
                                      labels: np.ndarray, save_name='confidence_distribution.png'):
@@ -290,7 +273,7 @@ class SentimentVisualizer:
         
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
         
-        # Overall distribution
+     
         ax1.hist(confidences, bins=50, alpha=0.7, color='#3498db', edgecolor='black')
         ax1.axvline(confidences.mean(), color='red', linestyle='--', 
                    linewidth=2, label=f'Mean: {confidences.mean():.3f}')
@@ -300,7 +283,7 @@ class SentimentVisualizer:
         ax1.legend(fontsize=11)
         ax1.grid(axis='y', alpha=0.3)
         
-        # Correct vs Incorrect
+    
         ax2.hist([confidences[correct], confidences[~correct]], bins=50, 
                 label=['Correct', 'Incorrect'], 
                 color=['#2ecc71', '#e74c3c'],
@@ -318,9 +301,7 @@ class SentimentVisualizer:
         
         print(f"✅ Saved confidence distribution to {save_name}")
     
-    # =========================================================================
-    # 9. TEXT LENGTH VS ACCURACY
-    # =========================================================================
+ 
     
     def plot_length_vs_accuracy(self, texts: List[str], predictions: np.ndarray, 
                                 labels: np.ndarray, save_name='length_vs_accuracy.png'):
@@ -336,7 +317,7 @@ class SentimentVisualizer:
         lengths = np.array([len(text.split()) for text in texts])
         correct = predictions == labels
         
-        # Create bins
+     
         bins = [0, 10, 20, 30, 50, 100, np.inf]
         bin_labels = ['<10', '10-20', '20-30', '30-50', '50-100', '100+']
         
@@ -355,7 +336,7 @@ class SentimentVisualizer:
         
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
         
-        # Accuracy by length
+
         bars = ax1.bar(bin_labels, bin_accuracies, alpha=0.8, 
                       color='#3498db', edgecolor='black')
         
@@ -371,8 +352,7 @@ class SentimentVisualizer:
         ax1.set_title('Accuracy vs Text Length', fontsize=14, fontweight='bold')
         ax1.set_ylim(0, 1.0)
         ax1.grid(axis='y', alpha=0.3)
-        
-        # Sample distribution
+       
         ax2.bar(bin_labels, bin_counts, alpha=0.8, color='#2ecc71', edgecolor='black')
         ax2.set_xlabel('Text Length (words)', fontsize=12)
         ax2.set_ylabel('Sample Count', fontsize=12)
@@ -385,9 +365,7 @@ class SentimentVisualizer:
         
         print(f"✅ Saved length vs accuracy to {save_name}")
     
-    # =========================================================================
-    # 10. ROC CURVES (FIXED - TYPE-SAFE SPARSE MATRIX HANDLING)
-    # =========================================================================
+
     
     def plot_roc_curves(self, labels: np.ndarray, probabilities: np.ndarray, 
                         save_name='roc_curves.png'):
@@ -402,22 +380,15 @@ class SentimentVisualizer:
         from sklearn.metrics import roc_curve, auc
         from sklearn.preprocessing import label_binarize
         
-        # Binarize labels - sklearn may return sparse matrix
         labels_bin = label_binarize(labels, classes=[0, 1, 2])
         
-        # ✅ CRITICAL FIX: Use proper type guard to handle sparse matrices safely
-        # This resolves BOTH type checker errors:
-        #   1. "Cannot access attribute 'toarray' for class 'ndarray'"
-        #   2. "'__getitem__' method not defined on type 'spmatrix'"
+
         if isinstance(labels_bin, spmatrix):
-            # Convert sparse matrix to dense array ONLY when needed
-            labels_bin = labels_bin.toarray()  # type: ignore[union-attr]
-        # After this check, type checker knows labels_bin is ndarray
-        
+            labels_bin = labels_bin.toarray() 
+   
         plt.figure(figsize=(10, 8))
         
         for i, class_name in enumerate(self.class_names):
-            # ✅ Now safe to index: labels_bin is guaranteed to be ndarray
             fpr, tpr, _ = roc_curve(labels_bin[:, i], probabilities[:, i])
             roc_auc = auc(fpr, tpr)
             
@@ -439,10 +410,6 @@ class SentimentVisualizer:
         
         print(f"✅ Saved ROC curves to {save_name}")
     
-    # =========================================================================
-    # 11. WORD CLOUD
-    # =========================================================================
-    
     def plot_wordcloud_errors(self, texts: List[str], predictions: np.ndarray, 
                               labels: np.ndarray, save_name='wordcloud_errors.png'):
         """
@@ -461,10 +428,8 @@ class SentimentVisualizer:
             print("⚠️  No errors to visualize")
             return
         
-        # Combine all error texts
         error_text = ' '.join(error_texts)
         
-        # Create word cloud
         wordcloud = WordCloud(width=1600, height=800, 
                              background_color='white',
                              colormap='Reds',
@@ -480,10 +445,6 @@ class SentimentVisualizer:
         plt.close()
         
         print(f"✅ Saved word cloud to {save_name}")
-    
-    # =========================================================================
-    # 12. MODEL COMPARISON BAR CHART
-    # =========================================================================
     
     def plot_model_comparison_bars(self, models_metrics: Dict[str, Dict[str, float]], 
                                    save_name='model_comparison.png'):
@@ -523,10 +484,6 @@ class SentimentVisualizer:
         
         print(f"✅ Saved model comparison to {save_name}")
     
-    # =========================================================================
-    # 13. LEARNING RATE SCHEDULE
-    # =========================================================================
-    
     def plot_lr_schedule(self, lr_history: List[float], save_name='lr_schedule.png'):
         """
         Plot learning rate schedule
@@ -547,10 +504,6 @@ class SentimentVisualizer:
         
         print(f"✅ Saved LR schedule to {save_name}")
     
-    # =========================================================================
-    # SUMMARY DASHBOARD
-    # =========================================================================
-    
     def create_summary_dashboard(self, metrics: Dict[str, Any], cm: np.ndarray, 
                                  save_name='summary_dashboard.png'):
         """
@@ -564,7 +517,6 @@ class SentimentVisualizer:
         fig = plt.figure(figsize=(18, 12))
         gs = fig.add_gridspec(3, 3, hspace=0.3, wspace=0.3)
         
-        # 1. Overall metrics (top-left)
         ax1 = fig.add_subplot(gs[0, 0])
         metric_names = ['Accuracy', 'Precision', 'Recall', 'F1-Score']
         metric_values = [
@@ -581,7 +533,6 @@ class SentimentVisualizer:
         ax1.set_title('Overall Metrics', fontweight='bold', fontsize=12)
         ax1.grid(axis='x', alpha=0.3)
         
-        # 2. Confusion matrix (top-middle and top-right)
         ax2 = fig.add_subplot(gs[0, 1:])
         cm_norm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
         sns.heatmap(cm_norm, annot=True, fmt='.2%', cmap='Blues',
@@ -590,8 +541,7 @@ class SentimentVisualizer:
         ax2.set_title('Normalized Confusion Matrix', fontweight='bold', fontsize=12)
         ax2.set_ylabel('True')
         ax2.set_xlabel('Predicted')
-        
-        # 3. Per-class F1 (middle-left)
+
         ax3 = fig.add_subplot(gs[1, 0])
         classes = list(metrics['per_class'].keys())
         f1_scores = [metrics['per_class'][c]['f1'] for c in classes]
@@ -601,7 +551,6 @@ class SentimentVisualizer:
         ax3.set_ylim(0, 1.0)
         ax3.grid(axis='y', alpha=0.3)
         
-        # 4. Per-class precision (middle-center)
         ax4 = fig.add_subplot(gs[1, 1])
         precision_scores = [metrics['per_class'][c]['precision'] for c in classes]
         ax4.bar(classes, precision_scores, color=self.colors, alpha=0.8)
@@ -610,7 +559,6 @@ class SentimentVisualizer:
         ax4.set_ylim(0, 1.0)
         ax4.grid(axis='y', alpha=0.3)
         
-        # 5. Per-class recall (middle-right)
         ax5 = fig.add_subplot(gs[1, 2])
         recall_scores = [metrics['per_class'][c]['recall'] for c in classes]
         ax5.bar(classes, recall_scores, color=self.colors, alpha=0.8)
@@ -618,15 +566,13 @@ class SentimentVisualizer:
         ax5.set_title('Per-Class Recall', fontweight='bold', fontsize=12)
         ax5.set_ylim(0, 1.0)
         ax5.grid(axis='y', alpha=0.3)
-        
-        # 6. Class distribution (bottom-left)
+                                     
         ax6 = fig.add_subplot(gs[2, 0])
         support = [metrics['per_class'][c]['support'] for c in classes]
         ax6.pie(support, labels=classes, autopct='%1.1f%%', 
                colors=self.colors, startangle=90)
         ax6.set_title('Class Distribution', fontweight='bold', fontsize=12)
         
-        # 7. Metrics summary table (bottom-center and bottom-right)
         ax7 = fig.add_subplot(gs[2, 1:])
         ax7.axis('tight')
         ax7.axis('off')
