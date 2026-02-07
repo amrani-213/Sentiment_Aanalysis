@@ -44,76 +44,62 @@ Sentiment_analysis/
 │
 ├── src/
 │   ├── data/
-│   │   ├── preprocessing.py
-│   │   ├── augmentation.py
-│   │   └── dataset.py
+│   │   ├── preprocessing.py      # Text preprocessing pipeline
+│   │   ├── augmentation.py       # Data augmentation
+│   │   └── dataset.py            # PyTorch dataset classes
 │   │
 │   ├── models/
 │   │   ├── baseline/
-│   │   │   ├── fasttext.py
-│   │   │   ├── bilstm_attention.py
-│   │   │   └── custom_transformer.py
+│   │   │   ├── fasttext.py       # FastText model
+│   │   │   ├── bilstm_attention.py  # BiLSTM with multi-head attention
+│   │   │   └── custom_transformer.py  # Transformer from scratch
 │   │   │
 │   │   ├── pretrained/
-│   │   │   ├── roberta.py
-│   │   │   └── bertweet.py
+│   │   │   ├── roberta.py        # RoBERTa classifier
+│   │   │   └── bertweet.py       # BERTweet classifier
 │   │   │
 │   │   └── ensemble/
-│   │       ├── voting_ensemble.py
-│   │       └── stacking_ensemble.py
+│   │       ├── voting_ensemble.py    # Voting strategies
+│   │       └── stacking_ensemble.py  # Meta-learner ensemble
 │   │
 │   ├── training/
-│   │   ├── trainer.py
-│   │   ├── losses.py
-│   │   └── metrics.py
+│   │   ├── trainer.py            # Training loop
+│   │   ├── losses.py             # Custom loss functions
+│   │   └── metrics.py            # Evaluation metrics
 │   │
 │   ├── evaluation/
-│   │   ├── evaluator.py
-│   │   ├── error_analysis.py
-│   │   └── visualizer.py
+│   │   ├── evaluator.py          # Model evaluation
+│   │   ├── error_analysis.py     # Error pattern analysis
+│   │   └── visualizer.py         # Result visualization
 │   │
 │   └── utils/
-│       ├── config.py
-│       ├── logger.py
-│       ├── helpers.py
-│       └── model_loader.py
+│       ├── config.py             # Configuration utilities
+│       ├── logger.py             # Logging setup
+│       ├── helpers.py            # Helper functions
+│       └── model_loader.py       # Model loading utilities
 │
 ├── scripts/
-│   ├── 00_eda.py
-│   ├── 01_train_baseline.py
-│   ├── 02_train_pretrained.py
-│   ├── 03_train_ensemble.py
-│   ├── 04_evaluate_all.py
-│   └── 05_error_analysis.py
+│   ├── 00_eda.py                 # Exploratory data analysis
+│   ├── 01_train_baseline.py     # Train baseline models
+│   ├── 02_train_pretrained.py   # Train pretrained models
+│   ├── 03_train_ensemble.py     # Train ensemble models
+│   ├── 04_evaluate_all.py       # Comprehensive evaluation
+│   └── 05_error_analysis.py     # Error analysis
 │
 ├── results/
-│   ├── eda/
-│   ├── baseline/
-│   ├── pretrained/
-│   ├── ensemble/
-│   └── final_comparison/
+│   ├── eda/                      # EDA visualizations
+│   ├── baseline/                 # Baseline model results
+│   ├── pretrained/               # Pretrained model results
+│   ├── ensemble/                 # Ensemble results
+│   └── final_comparison/         # Comparative analysis
 │
 ├── notebooks/
-│   ├── EDA_Analysis.ipynb
-│   ├── Model_baseline_Comparison.ipynb
-│   └── Model_ensemble_Comparison.ipynb
+│   ├── EDA_Analysis.ipynb        # Interactive EDA
+│   ├── Model_Comparison.ipynb    # Model comparison
+│   └── Error_Deep_Dive.ipynb     # Error analysis
 │
-├── debugging/
-│   ├── FIX_ensemble_results.py
-│   ├── patch_models.py
-│   ├── results_save.py
-│   └── save_processed_data.py
-│
-├── logs/
-│   ├── baseline_training_20260206_122307.log
-│   └── pretrained_training_20260206_123139.log
-│
-├── requirements.txt
-├── README.md
-├── .gitattributes
-└── .gitignore
-
-
+├── requirements.txt              # Python dependencies
+└── README.md                     # Project documentation
 ```
 
 ---
@@ -382,6 +368,50 @@ python scripts/05_error_analysis.py \
   --output_dir results/error_analysis \
   --device cuda
 ```
+
+---
+
+## Deployment Demo
+
+### Interactive Web Application
+
+A live demonstration of the sentiment analysis system is available as an interactive web application:
+
+**Live Demo:** [https://huggingface.co/spaces/abdou21367/sentiment_anals](https://huggingface.co/spaces/abdou21367/sentiment_anals)
+
+**Architecture:**
+- **Framework:** Streamlit for interactive UI
+- **Hosting:** Hugging Face Spaces
+- **Containerization:** Docker for reproducible deployment
+- **Models Deployed:** Custom Transformer and BERTweet
+
+**Technical Implementation:**
+
+1. **Model Storage Solution:**
+   - Models hosted on Google Drive due to GitHub file size limitations
+   - `gdown` library for automated model downloading
+   - Lazy loading to minimize memory footprint
+
+2. **Application Features:**
+   - Real-time sentiment prediction
+   - Side-by-side comparison: Custom Transformer vs BERTweet
+   - Confidence score visualization
+   - Interactive text input
+   - Batch processing capability
+
+3. **Deployment Stack:**
+   - **Container:** Docker for environment isolation
+   - **Frontend:** Streamlit with custom CSS styling
+   - **Backend:** PyTorch inference engine
+   - **CI/CD:** Automated deployment via Hugging Face Spaces
+
+**Usage:**
+1. Visit the application URL
+2. Enter text in the input field
+3. View predictions from both models
+4. Compare confidence scores and predictions
+
+This deployment demonstrates production-ready sentiment analysis with transformer models, showcasing the practical application of the research implementation.
 
 ---
 
