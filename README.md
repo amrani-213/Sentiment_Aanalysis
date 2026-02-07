@@ -44,62 +44,75 @@ Sentiment_analysis/
 │
 ├── src/
 │   ├── data/
-│   │   ├── preprocessing.py      # Text preprocessing pipeline
-│   │   ├── augmentation.py       # Data augmentation
-│   │   └── dataset.py            # PyTorch dataset classes
+│   │   ├── preprocessing.py
+│   │   ├── augmentation.py
+│   │   └── dataset.py
 │   │
 │   ├── models/
 │   │   ├── baseline/
-│   │   │   ├── fasttext.py       # FastText model
-│   │   │   ├── bilstm_attention.py  # BiLSTM with multi-head attention
-│   │   │   └── custom_transformer.py  # Transformer from scratch
+│   │   │   ├── fasttext.py
+│   │   │   ├── bilstm_attention.py
+│   │   │   └── custom_transformer.py
 │   │   │
 │   │   ├── pretrained/
-│   │   │   ├── roberta.py        # RoBERTa classifier
-│   │   │   └── bertweet.py       # BERTweet classifier
+│   │   │   ├── roberta.py
+│   │   │   └── bertweet.py
 │   │   │
 │   │   └── ensemble/
-│   │       ├── voting_ensemble.py    # Voting strategies
-│   │       └── stacking_ensemble.py  # Meta-learner ensemble
+│   │       ├── voting_ensemble.py
+│   │       └── stacking_ensemble.py
 │   │
 │   ├── training/
-│   │   ├── trainer.py            # Training loop
-│   │   ├── losses.py             # Custom loss functions
-│   │   └── metrics.py            # Evaluation metrics
+│   │   ├── trainer.py
+│   │   ├── losses.py
+│   │   └── metrics.py
 │   │
 │   ├── evaluation/
-│   │   ├── evaluator.py          # Model evaluation
-│   │   ├── error_analysis.py     # Error pattern analysis
-│   │   └── visualizer.py         # Result visualization
+│   │   ├── evaluator.py
+│   │   ├── error_analysis.py
+│   │   └── visualizer.py
 │   │
 │   └── utils/
-│       ├── config.py             # Configuration utilities
-│       ├── logger.py             # Logging setup
-│       ├── helpers.py            # Helper functions
-│       └── model_loader.py       # Model loading utilities
+│       ├── config.py
+│       ├── logger.py
+│       ├── helpers.py
+│       └── model_loader.py
 │
 ├── scripts/
-│   ├── 00_eda.py                 # Exploratory data analysis
-│   ├── 01_train_baseline.py     # Train baseline models
-│   ├── 02_train_pretrained.py   # Train pretrained models
-│   ├── 03_train_ensemble.py     # Train ensemble models
-│   ├── 04_evaluate_all.py       # Comprehensive evaluation
-│   └── 05_error_analysis.py     # Error analysis
+│   ├── 00_eda.py
+│   ├── 01_train_baseline.py
+│   ├── 02_train_pretrained.py
+│   ├── 03_train_ensemble.py
+│   ├── 04_evaluate_all.py
+│   └── 05_error_analysis.py
 │
 ├── results/
-│   ├── eda/                      # EDA visualizations
-│   ├── baseline/                 # Baseline model results
-│   ├── pretrained/               # Pretrained model results
-│   ├── ensemble/                 # Ensemble results
-│   └── final_comparison/         # Comparative analysis
+│   ├── eda/
+│   ├── baseline/
+│   ├── pretrained/
+│   ├── ensemble/
+│   └── final_comparison/
 │
 ├── notebooks/
-│   ├── EDA_Analysis.ipynb        # Interactive EDA
-│   ├── Model_Comparison.ipynb    # Model comparison
-│   └── Error_Deep_Dive.ipynb     # Error analysis
+│   ├── EDA_Analysis.ipynb
+│   ├── Model_baseline_Comparison.ipynb
+│   └── Model_ensemble_Comparison.ipynb
 │
-├── requirements.txt              # Python dependencies
-└── README.md                     # Project documentation
+├── debugging/
+│   ├── FIX_ensemble_results.py
+│   ├── patch_models.py
+│   ├── results_save.py
+│   └── save_processed_data.py
+│
+├── logs/
+│   ├── baseline_training_20260206_122307.log
+│   └── pretrained_training_20260206_123139.log
+│
+├── requirements.txt
+├── README.md
+├── .gitattributes
+└── .gitignore
+
 ```
 
 ---
