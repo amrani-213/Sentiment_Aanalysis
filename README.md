@@ -103,7 +103,6 @@ Sentiment_analysis/
 │   ├── patch_models.py
 │   ├── results_save.py
 │   ├── save_processed_data.py
-│   └── placeholder.py            # Optional placeholder
 │
 ├── requirements.txt              # Python dependencies
 ├── README.md                     # Project documentation
