@@ -513,15 +513,3 @@ Training logs available in `logs/` directory.
 This project is submitted as academic work for the Introduction to Deep Learning course at ENSSEA.
 
 ---
-
-## Contact
-
-**Amrani Bouabdellah**  
-Higher National School of Statistics and Applied Economy (ENSSEA)  
-Email: [Contact via ENSSEA]
-
----
-
-**Submission Date:** February 7, 2026  
-**Course:** Introduction to Deep Learning  
-**Instructor:** Ayoub Asri
