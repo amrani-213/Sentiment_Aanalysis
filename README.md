@@ -96,7 +96,7 @@ Sentiment_analysis/
 ├── notebooks/
 │   ├── EDA_Analysis.ipynb
 │   ├── Model_baseline_Comparison.ipynb
-    ├── Error_Deep_Dive.ipynb
+│   ├── Error_Deep_Dive.ipynb
 │   └── Model_ensemble_Comparison.ipynb
 │
 ├── debugging/
