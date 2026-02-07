@@ -44,14 +44,12 @@ class FastTextModel(nn.Module):
         self.num_classes = num_classes
         self.use_char_ngrams = use_char_ngrams
         self.use_sentiment_features = False
-        # Word embedding layer
         self.word_embedding = nn.Embedding(
             vocab_size,
             embedding_dim,
             padding_idx=padding_idx
         )
         
-        # Character n-gram embedding (if enabled)
         if use_char_ngrams:
             self.ngram_embedding = nn.Embedding(
                 ngram_vocab_size,
@@ -59,13 +57,11 @@ class FastTextModel(nn.Module):
                 padding_idx=0
             )
         
-        # Classification layers
         self.fc1 = nn.Linear(embedding_dim, embedding_dim // 2)
         self.fc2 = nn.Linear(embedding_dim // 2, num_classes)
         
         self.dropout = nn.Dropout(dropout)
         
-        # Initialize weights
         self._init_weights()
     
     def _init_weights(self):
@@ -92,30 +88,24 @@ class FastTextModel(nn.Module):
         """
         batch_size, seq_len = x.size()
         
-        # Create mask if not provided
         if mask is None:
-            mask = (x != 0).float()  # (batch_size, seq_len)
+            mask = (x != 0).float()  
         
-        # Word embeddings
-        word_emb = self.word_embedding(x)  # (batch_size, seq_len, embedding_dim)
+        word_emb = self.word_embedding(x) 
         
-        # Add character n-gram embeddings if available
         if self.use_char_ngrams and ngram_indices is not None:
-            ngram_emb = self.ngram_embedding(ngram_indices)  # (batch_size, seq_len, num_ngrams, embedding_dim)
-            ngram_emb = ngram_emb.mean(dim=2)  # Average over n-grams: (batch_size, seq_len, embedding_dim)
+            ngram_emb = self.ngram_embedding(ngram_indices)  
+            ngram_emb = ngram_emb.mean(dim=2) 
             
-            # Combine word and n-gram embeddings
             combined_emb = (word_emb + ngram_emb) / 2
         else:
             combined_emb = word_emb
         
-        # Average pooling (with attention to padding)
         mask_expanded = mask.unsqueeze(-1).expand(combined_emb.size())
         sum_embeddings = torch.sum(combined_emb * mask_expanded, dim=1)
         sum_mask = torch.clamp(mask_expanded.sum(dim=1), min=1e-9)
-        pooled = sum_embeddings / sum_mask  # (batch_size, embedding_dim)
+        pooled = sum_embeddings / sum_mask  
         
-        # Classification
         out = F.relu(self.fc1(pooled))
         out = self.dropout(out)
         logits = self.fc2(out)
@@ -153,11 +143,9 @@ class CharNGramExtractor:
         Returns:
             List of n-grams
         """
-        # Add special boundary markers
         word = f"<{word}>"
         ngrams = []
         
-        # Extract n-grams of different lengths
         for n in range(self.min_n, min(len(word), self.max_n) + 1):
             for i in range(len(word) - n + 1):
                 ngrams.append(word[i:i+n])
@@ -174,7 +162,6 @@ class CharNGramExtractor:
         """
         print("Building character n-gram vocabulary...")
         
-        # Extract all n-grams
         for text in texts:
             words = text.lower().split()
             for word in words:
@@ -182,8 +169,6 @@ class CharNGramExtractor:
                     ngrams = self.extract_ngrams(word)
                     self.ngram_counts.update(ngrams)
         
-        # Build vocabulary (most common n-grams)
-        # Reserve index 0 for padding
         self.ngram2idx['<PAD>'] = 0
         self.idx2ngram[0] = '<PAD>'
         
@@ -207,7 +192,6 @@ class CharNGramExtractor:
         ngrams = self.extract_ngrams(word)
         indices = [self.ngram2idx.get(ng, 0) for ng in ngrams]
         
-        # Pad or truncate to fixed size
         if len(indices) < num_ngrams:
             indices += [0] * (num_ngrams - len(indices))
         else:
@@ -238,22 +222,19 @@ def create_fasttext_model(
     
     model = FastTextModel(**config)
     
-    return model, config  # ✅ Return tuple
+    return model, config 
 
 
 if __name__ == "__main__":
-    # Test model
     print("="*80)
     print("TESTING FASTTEXT MODEL")
     print("="*80)
     
-    # Model parameters
     vocab_size = 10000
     batch_size = 16
     seq_len = 100
     num_ngrams = 10
     
-    # Create model
     model = create_fasttext_model(
         vocab_size=vocab_size,
         embedding_dim=100,
@@ -266,26 +247,22 @@ if __name__ == "__main__":
     print(f"\nModel Architecture:")
     print(model)
     
-    # Count parameters
     total_params = sum(p.numel() for p in model.parameters())
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     
     print(f"\nTotal Parameters: {total_params:,}")
     print(f"Trainable Parameters: {trainable_params:,}")
     
-    # Test forward pass without n-grams
     dummy_input = torch.randint(0, vocab_size, (batch_size, seq_len))
     print(f"\nInput shape: {dummy_input.shape}")
     
     output = model(dummy_input)
     print(f"Output shape (without n-grams): {output.shape}")
     
-    # Test forward pass with n-grams
     dummy_ngrams = torch.randint(0, 10000, (batch_size, seq_len, num_ngrams))
     output_with_ngrams = model(dummy_input, ngram_indices=dummy_ngrams)
     print(f"Output shape (with n-grams): {output_with_ngrams.shape}")
     
-    # Test n-gram extractor
     print("\n" + "="*80)
     print("TESTING CHARACTER N-GRAM EXTRACTOR")
     print("="*80)
@@ -297,7 +274,6 @@ if __name__ == "__main__":
     print(f"\nWord: '{test_word}'")
     print(f"Character n-grams: {ngrams}")
     
-    # Build small vocab for testing
     test_texts = ["this is amazing", "wonderful movie", "terrible experience"]
     word2idx = {'this': 1, 'is': 2, 'amazing': 3, 'wonderful': 4, 'movie': 5, 'terrible': 6, 'experience': 7}
     extractor.build_vocab(test_texts, word2idx)
