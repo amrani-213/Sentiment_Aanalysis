@@ -498,16 +498,6 @@ Training logs available in `logs/` directory.
 
 ---
 
-## References
-
-1. Vaswani et al. (2017). "Attention Is All You Need." NeurIPS.
-2. Liu et al. (2019). "RoBERTa: A Robustly Optimized BERT Pretraining Approach."
-3. Nguyen et al. (2020). "BERTweet: A pre-trained language model for English Tweets."
-4. Lin et al. (2017). "Focal Loss for Dense Object Detection." ICCV.
-5. Hutto & Gilbert (2014). "VADER: A Parsimonious Rule-based Model for Sentiment Analysis."
-
----
-
 ## License
 
 This project is submitted as academic work for the Introduction to Deep Learning course at ENSSEA.
