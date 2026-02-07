@@ -80,11 +80,11 @@ Sentiment_analysis/
 │
 ├── scripts/
 │   ├── 00_eda.py                 # Exploratory data analysis
-│   ├── 01_train_baseline.py     # Train baseline models
-│   ├── 02_train_pretrained.py   # Train pretrained models
-│   ├── 03_train_ensemble.py     # Train ensemble models
-│   ├── 04_evaluate_all.py       # Comprehensive evaluation
-│   └── 05_error_analysis.py     # Error analysis
+│   ├── 01_train_baseline.py      # Train baseline models
+│   ├── 02_train_pretrained.py    # Train pretrained models
+│   ├── 03_train_ensemble.py      # Train ensemble models
+│   ├── 04_evaluate_all.py        # Comprehensive evaluation
+│   └── 05_error_analysis.py      # Error analysis
 │
 ├── results/
 │   ├── eda/                      # EDA visualizations
@@ -95,11 +95,23 @@ Sentiment_analysis/
 │
 ├── notebooks/
 │   ├── EDA_Analysis.ipynb        # Interactive EDA
-│   ├── Model_Comparison.ipynb    # Model comparison
-│   └── Error_Deep_Dive.ipynb     # Error analysis
+│   ├── Model_baseline_Comparison.ipynb   # Baseline model comparison
+│   └── Model_ensemble_Comparison.ipynb   # Ensemble model comparison
+│
+├── debugging/                    # Debugging scripts and experiments
+│   ├── FIX_ensemble_results.py
+│   ├── patch_models.py
+│   ├── results_save.py
+│   ├── save_processed_data.py
+│   └── placeholder.py            # Optional placeholder
 │
 ├── requirements.txt              # Python dependencies
-└── README.md                     # Project documentation
+├── README.md                     # Project documentation
+├── baseline_training_20260206_122307.log
+├── pretrained_training_20260206_123139.log
+├── .gitattributes
+└── .gitignore
+
 ```
 
 ---
